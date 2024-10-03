@@ -1,39 +1,38 @@
-version: '2'
+version: "2"
 volumes:
   data:
 services:
-  localstack:
-    image: localstack/localstack:latest
-    container_name: localstack
-    ports:
-      - '4563-4599:4563-4599'
-      - '8055:8080'
-    environment:
-      - SERVICES=sns,sqs
-      - DEBUG=1
-      - DATA_DIR=/tmp/localstack/data
-    volumes:
-      - './.localstack:/tmp/localstack'
-      - '/var/run/docker.sock:/var/run/docker.sock'
+  #   localstack:
+  #     image: localstack/localstack:latest
+  #     container_name: localstack
+  #     ports:
+  #       - '4563-4599:4563-4599'
+  #       - '8055:8080'
+  #     environment:
+  #       - SERVICES=sns,sqs
+  #       - DEBUG=1
+  #       - DATA_DIR=/tmp/localstack/data
+  #     volumes:
+  #       - './.localstack:/tmp/localstack'
+  #       - '/var/run/docker.sock:/var/run/docker.sock'
   redis:
     image: redis
     ports:
       - "6379:6379"
-  mongo:
-    image: mongo:4.0.22
-    ports:
-      - "27017:27017"
-    volumes:
-      - ~/data:/data/db
+  # mongo:
+  #   image: mongo:4.0.22
+  #   ports:
+  #     - "27017:27017"
+  #   volumes:
+  #     - ~/data:/data/db
   psql:
-    image: postgres:latest
+    image: postgres:14
     restart: always
     ports:
       - 5432:5432
     environment:
-      POSTGRES_USER: gcstatus
-      POSTGRES_PASSWORD: whatever
+      POSTGRES_USER: pguser
+      POSTGRES_PASSWORD: pgpass
     volumes:
       - ~/pg-data:/var/lib/postgresql/data
       - ~/postgres.conf:/etc/postgresql/postgresql.conf
-    
